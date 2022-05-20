@@ -1,10 +1,7 @@
 package view;
 
 
-import model.ChessColor;
-import model.ChessComponent;
-import model.EmptySlotComponent;
-import model.RookChessComponent;
+import model.*;
 import controller.ClickController;
 
 import javax.swing.*;
@@ -48,6 +45,12 @@ public class Chessboard extends JComponent {
         initRookOnBoard(0, CHESSBOARD_SIZE - 1, ChessColor.BLACK);
         initRookOnBoard(CHESSBOARD_SIZE - 1, 0, ChessColor.WHITE);
         initRookOnBoard(CHESSBOARD_SIZE - 1, CHESSBOARD_SIZE - 1, ChessColor.WHITE);
+        initBishopOnBoard(0, 2, ChessColor.BLACK);
+        initBishopOnBoard(0, CHESSBOARD_SIZE - 3, ChessColor.BLACK);
+        initBishopOnBoard(CHESSBOARD_SIZE - 1, 2, ChessColor.WHITE);
+        initBishopOnBoard(CHESSBOARD_SIZE - 1, CHESSBOARD_SIZE - 3, ChessColor.WHITE);
+        initQueenOnBoard(0, 3, ChessColor.BLACK);
+        initQueenOnBoard(CHESSBOARD_SIZE - 1, 3, ChessColor.WHITE);
     }
 
     public ChessComponent[][] getChessComponents() {
@@ -101,6 +104,17 @@ public class Chessboard extends JComponent {
         putChessOnBoard(chessComponent);
     }
 
+    private void initBishopOnBoard(int row, int col, ChessColor color) {
+        ChessComponent chessComponent = new BishopChessComponent(new ChessboardPoint(row, col), calculatePoint(row, col), color, clickController, CHESS_SIZE);
+        chessComponent.setVisible(true);
+        putChessOnBoard(chessComponent);
+    }
+
+    private void initQueenOnBoard(int row, int col, ChessColor color) {
+        ChessComponent chessComponent = new QueenChessComponent(new ChessboardPoint(row, col), calculatePoint(row, col), color, clickController, CHESS_SIZE);
+        chessComponent.setVisible(true);
+        putChessOnBoard(chessComponent);
+    }
 
     @Override
     protected void paintComponent(Graphics g) {
