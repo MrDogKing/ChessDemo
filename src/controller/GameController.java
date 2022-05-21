@@ -10,7 +10,7 @@ import java.util.List;
 public class GameController {
     private Chessboard chessboard;
 
-    public void initchessboard(){
+    public void initChessboard(){
         chessboard.initBoard();
     }
 

@@ -30,7 +30,7 @@ public class ChessGameFrame extends JFrame {
         addChessboard();
         addLabel();
         addHelloButton();
-        addResittingButton();
+        addResettingButton();
         addLoadButton();
     }
 
@@ -61,17 +61,17 @@ public class ChessGameFrame extends JFrame {
      */
 
     private void addHelloButton() {
-        JButton button = new JButton("Show Hello Here");
-        button.addActionListener((e) -> JOptionPane.showMessageDialog(this, "Hello, world!"));
+        JButton button = new JButton("Rescue Mom");
+        button.addActionListener((e) -> JOptionPane.showMessageDialog(this, "Your mom is fucked by me, and she is gonna die!"));
         button.setLocation(HEIGTH, HEIGTH / 10 + 120);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
     }
 
-    private void addResittingButton() {
-        JButton button = new JButton("Rest Game");
-        button.addActionListener((e) -> gameController.initchessboard()  );
+    private void addResettingButton() {
+        JButton button = new JButton("Reset Game");
+        button.addActionListener((e) -> gameController.initChessboard()  );
         button.setLocation(HEIGTH, HEIGTH / 10 + 360);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));

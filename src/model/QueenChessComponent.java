@@ -55,8 +55,8 @@ public class QueenChessComponent extends ChessComponent {
             }
         } else if (source.getX() - destination.getX() == destination.getY() - source.getY()) {
             int row = Math.min(source.getX(), destination.getX());
-            for (int col = Math.min(source.getY(), destination.getY()) + 1;
-                 col < Math.max(source.getY(), destination.getY()); col++) {
+            for (int col = Math.max(source.getY(), destination.getY()) - 1;
+                 col > Math.min(source.getY(), destination.getY()); col--) {
                 row++;
                 if (!(chessComponents[row][col] instanceof EmptySlotComponent)) {
                     return false;
