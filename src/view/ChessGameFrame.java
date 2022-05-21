@@ -30,6 +30,7 @@ public class ChessGameFrame extends JFrame {
         addChessboard();
         addLabel();
         addHelloButton();
+        addResittingButton();
         addLoadButton();
     }
 
@@ -68,6 +69,15 @@ public class ChessGameFrame extends JFrame {
         add(button);
     }
 
+    private void addResittingButton() {
+        JButton button = new JButton("Rest Game");
+        button.addActionListener((e) -> gameController.initchessboard()  );
+        button.setLocation(HEIGTH, HEIGTH / 10 + 360);
+        button.setSize(200, 60);
+        button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(button);
+    }
+
     private void addLoadButton() {
         JButton button = new JButton("Load");
         button.setLocation(HEIGTH, HEIGTH / 10 + 240);
@@ -81,5 +91,6 @@ public class ChessGameFrame extends JFrame {
             gameController.loadGameFromFile(path);
         });
     }
+
 
 }

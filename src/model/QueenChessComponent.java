@@ -44,7 +44,7 @@ public class QueenChessComponent extends ChessComponent {
     @Override
     public boolean canMoveTo(ChessComponent[][] chessComponents, ChessboardPoint destination) {
         ChessboardPoint source = getChessboardPoint();
-        if (source.getX() - destination.getX() == source.getY() - destination.getY() ) {
+        if (source.getX() - destination.getX()  == source.getY() - destination.getY() ) {
             int row = Math.min(source.getX(), destination.getX());
             for (int col = Math.min(source.getY(), destination.getY()) + 1;
                  col < Math.max(source.getY(), destination.getY()); col++) {
