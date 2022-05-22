@@ -18,6 +18,10 @@ public class GameController {
         this.chessboard = chessboard;
     }
 
+    public String getCurrentPlayer(){
+        return this.chessboard.getCurrentColor().getName() ;
+    }
+
     public List<String> loadGameFromFile(String path) {
         try {
             List<String> chessData = Files.readAllLines(Path.of(path));

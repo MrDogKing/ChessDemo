@@ -1,6 +1,7 @@
 package controller;
 
 
+import model.ChessColor;
 import model.ChessComponent;
 import view.Chessboard;
 
@@ -29,7 +30,6 @@ public class ClickController {
                 //repaint in swap chess method.
                 chessboard.swapChessComponents(first, chessComponent);
                 chessboard.swapColor();
-
                 first.setSelected(false);
                 first = null;
             }

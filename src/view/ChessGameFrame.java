@@ -14,6 +14,7 @@ public class ChessGameFrame extends JFrame {
     private final int HEIGTH;
     public final int CHESSBOARD_SIZE;
     private GameController gameController;
+    public static JLabel statusLabel;
 
     public ChessGameFrame(int width, int height) {
         setTitle("2022 CS102A Project Demo"); //设置标题
@@ -39,7 +40,7 @@ public class ChessGameFrame extends JFrame {
      * 在游戏面板中添加棋盘
      */
     private void addChessboard() {
-        Chessboard chessboard = new Chessboard(CHESSBOARD_SIZE, CHESSBOARD_SIZE);
+        Chessboard chessboard = new Chessboard(CHESSBOARD_SIZE, CHESSBOARD_SIZE,this);
         gameController = new GameController(chessboard);
         chessboard.setLocation(HEIGTH / 10, HEIGTH / 10);
         add(chessboard);
@@ -49,12 +50,13 @@ public class ChessGameFrame extends JFrame {
      * 在游戏面板中添加标签
      */
     private void addLabel() {
-        JLabel statusLabel = new JLabel("Sample label");
-        statusLabel.setLocation(HEIGTH, HEIGTH / 10);
+        statusLabel = new JLabel(gameController.getCurrentPlayer());
+        statusLabel.setLocation(HEIGTH+50, HEIGTH / 10);
         statusLabel.setSize(200, 60);
-        statusLabel.setFont(new Font("Rockwell", Font.BOLD, 20));
+        statusLabel.setFont(new Font("Rockwell", Font.BOLD, 30));
         add(statusLabel);
     }
+
 
     /**
      * 在游戏面板中增加一个按钮，如果按下的话就会显示Hello, world!
@@ -92,5 +94,11 @@ public class ChessGameFrame extends JFrame {
         });
     }
 
+    public static JLabel getStatusLabel() {
+        return statusLabel;
+    }
 
+    public static void setStatusLabel(String s) {
+        ChessGameFrame.getStatusLabel().setText(s);
+    }
 }

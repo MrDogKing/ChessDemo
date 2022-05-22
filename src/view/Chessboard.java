@@ -30,9 +30,10 @@ public class Chessboard extends JComponent {
     //all chessComponents in this chessboard are shared only one model controller
     private final ClickController clickController = new ClickController(this);
     private final int CHESS_SIZE;
+    private ChessGameFrame chessGameFrame;
 
 
-    public Chessboard(int width, int height) {
+    public Chessboard(int width, int height, ChessGameFrame chessGameFrame) {
         setLayout(null); // Use absolute layout.
         setSize(width, height);
         CHESS_SIZE = width / 8;
@@ -62,6 +63,7 @@ public class Chessboard extends JComponent {
         for (int i = 0; i < CHESSBOARD_SIZE ; i++) {
             initPawnOnBoard(6,i,ChessColor.WHITE ) ;
         }
+        this.chessGameFrame = chessGameFrame;
     }
 
     //初始化棋盘
@@ -91,6 +93,7 @@ public class Chessboard extends JComponent {
             initPawnOnBoard(6,i,ChessColor.WHITE ) ;
         }
         currentColor=ChessColor.WHITE;
+        ChessGameFrame.setStatusLabel(getCurrentColor().getName()) ;
         repaint();
     }
 
@@ -137,6 +140,7 @@ public class Chessboard extends JComponent {
 
     public void swapColor() {
         currentColor = currentColor == ChessColor.BLACK ? ChessColor.WHITE : ChessColor.BLACK;
+        ChessGameFrame.getStatusLabel().setText(currentColor.getName() );
     }
 
     private void initRookOnBoard(int row, int col, ChessColor color) {
