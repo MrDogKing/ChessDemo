@@ -6,6 +6,7 @@ import controller.ClickController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,10 +31,9 @@ public class Chessboard extends JComponent {
     //all chessComponents in this chessboard are shared only one model controller
     private final ClickController clickController = new ClickController(this);
     private final int CHESS_SIZE;
-    private ChessGameFrame chessGameFrame;
 
 
-    public Chessboard(int width, int height, ChessGameFrame chessGameFrame) {
+    public Chessboard(int width, int height) {
         setLayout(null); // Use absolute layout.
         setSize(width, height);
         CHESS_SIZE = width / 8;
@@ -63,7 +63,6 @@ public class Chessboard extends JComponent {
         for (int i = 0; i < CHESSBOARD_SIZE ; i++) {
             initPawnOnBoard(6,i,ChessColor.WHITE ) ;
         }
-        this.chessGameFrame = chessGameFrame;
     }
 
     //初始化棋盘
@@ -192,5 +191,77 @@ public class Chessboard extends JComponent {
 
     public void loadGame(List<String> chessData) {
         chessData.forEach(System.out::println);
+    }
+
+    public List<String> getChessBoard() {
+        List<String> result = new ArrayList<>() ;
+        for (int i = 0; i < 8; i++) {
+            StringBuilder  s = new StringBuilder();
+            for (int j = 0; j < 8; j++) {
+                ChessComponent chess = chessComponents[i][j];
+                if(chess instanceof RookChessComponent ){
+                    if(chess.getChessColor() == ChessColor.BLACK ){
+                        s.append("R") ;
+                    }
+                    else if(chess.getChessColor() == ChessColor.WHITE ){
+                        s.append("r") ;
+                    }
+                }
+                else if(chess instanceof KnightChessComponent ){
+                    if(chess.getChessColor() == ChessColor.BLACK ){
+                        s.append("N") ;
+                    }
+                    else if(chess.getChessColor() == ChessColor.WHITE ){
+                        s.append("n") ;
+                    }
+                }
+                else if(chess instanceof BishopChessComponent ){
+                    if(chess.getChessColor() == ChessColor.BLACK ){
+                        s.append("B") ;
+                    }
+                    else if(chess.getChessColor() == ChessColor.WHITE ){
+                        s.append("b") ;
+                    }
+                }
+                else if(chess instanceof QueenChessComponent ){
+                    if(chess.getChessColor() == ChessColor.BLACK ){
+                        s.append("Q") ;
+                    }
+                    else if(chess.getChessColor() == ChessColor.WHITE ){
+                        s.append("q") ;
+                    }
+                }
+                else if(chess instanceof KingChessComponent ){
+                    if(chess.getChessColor() == ChessColor.BLACK ){
+                        s.append("K") ;
+                    }
+                    else if(chess.getChessColor() == ChessColor.WHITE ){
+                        s.append("k") ;
+                    }
+                }
+                else if(chess instanceof PawnChessComponent ){
+                    if(chess.getChessColor() == ChessColor.BLACK ){
+                        s.append("P") ;
+                    }
+                    else if(chess.getChessColor() == ChessColor.WHITE ){
+                        s.append("p") ;
+                    }
+                }
+                else if(chess instanceof EmptySlotComponent ){
+                    s.append("_") ;
+                }
+            }
+            result.add(s.toString() ) ;
+        }
+        if(currentColor == ChessColor.BLACK ){
+            StringBuilder s  = new StringBuilder();
+            s.append("b") ;
+            result.add(s.toString() ) ;
+        }else if(currentColor == ChessColor.WHITE  ){
+            StringBuilder s  = new StringBuilder();
+            s.append("w") ;
+            result.add(s.toString() ) ;
+        }
+        return result ;
     }
 }

@@ -15,12 +15,14 @@ public class ChessGameFrame extends JFrame {
     public final int CHESSBOARD_SIZE;
     private GameController gameController;
     public static JLabel statusLabel;
+    private Chessboard chessboard ;
 
     public ChessGameFrame(int width, int height) {
-        setTitle("2022 CS102A Project Demo"); //设置标题
+        setTitle("CHESS GAME"); //设置标题
         this.WIDTH = width;
         this.HEIGTH = height;
         this.CHESSBOARD_SIZE = HEIGTH * 4 / 5;
+        this.chessboard = new Chessboard(CHESSBOARD_SIZE, CHESSBOARD_SIZE);
 
         setSize(WIDTH, HEIGTH);
         setLocationRelativeTo(null); // Center the window.
@@ -33,6 +35,9 @@ public class ChessGameFrame extends JFrame {
         addHelloButton();
         addResettingButton();
         addLoadButton();
+        addSaveButton() ;
+        addBackGround() ;
+
     }
 
 
@@ -40,10 +45,18 @@ public class ChessGameFrame extends JFrame {
      * 在游戏面板中添加棋盘
      */
     private void addChessboard() {
-        Chessboard chessboard = new Chessboard(CHESSBOARD_SIZE, CHESSBOARD_SIZE,this);
+        Chessboard chessboard1 = this.chessboard ;
         gameController = new GameController(chessboard);
-        chessboard.setLocation(HEIGTH / 10, HEIGTH / 10);
-        add(chessboard);
+        chessboard1.setLocation(HEIGTH / 10, HEIGTH / 10);
+//        chessboard1.setVisible(false ) ;
+        add(chessboard1);
+    }
+
+    private void addBackGround(){
+        ImageIcon img = new ImageIcon("./images/bj2.png");
+        JLabel background = new JLabel(img) ;
+        background.setBounds(0, -100,1000,1000) ;
+        add(background ) ;
     }
 
     /**
@@ -52,8 +65,9 @@ public class ChessGameFrame extends JFrame {
     private void addLabel() {
         statusLabel = new JLabel(gameController.getCurrentPlayer());
         statusLabel.setLocation(HEIGTH+50, HEIGTH / 10);
-        statusLabel.setSize(200, 60);
+        statusLabel.setSize(300, 90);
         statusLabel.setFont(new Font("Rockwell", Font.BOLD, 30));
+        statusLabel.setForeground(Color.WHITE );
         add(statusLabel);
     }
 
@@ -66,15 +80,6 @@ public class ChessGameFrame extends JFrame {
         JButton button = new JButton("Rescue Mom");
         button.addActionListener((e) -> JOptionPane.showMessageDialog(this, "Your mom is fucked by me, and she is gonna die!"));
         button.setLocation(HEIGTH, HEIGTH / 10 + 120);
-        button.setSize(200, 60);
-        button.setFont(new Font("Rockwell", Font.BOLD, 20));
-        add(button);
-    }
-
-    private void addResettingButton() {
-        JButton button = new JButton("Reset Game");
-        button.addActionListener((e) -> gameController.initChessboard()  );
-        button.setLocation(HEIGTH, HEIGTH / 10 + 360);
         button.setSize(200, 60);
         button.setFont(new Font("Rockwell", Font.BOLD, 20));
         add(button);
@@ -94,6 +99,28 @@ public class ChessGameFrame extends JFrame {
         });
     }
 
+    private void addSaveButton() {
+        JButton button = new JButton("Save");
+        button.setLocation(HEIGTH, HEIGTH / 10 + 360);
+        button.setSize(200, 60);
+        button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(button);
+        button.addActionListener(e -> {
+            this.gameController.saveGameFromFile() ;
+            JOptionPane.showMessageDialog(this, "Save Successfully!");
+        });
+    }
+    private void addResettingButton() {
+        JButton button = new JButton("Reset Game");
+        button.addActionListener((e) -> gameController.initChessboard()  );
+        button.setLocation(HEIGTH, HEIGTH / 10 + 480);
+        button.setSize(200, 60);
+        button.setFont(new Font("Rockwell", Font.BOLD, 20));
+        add(button);
+    }
+
+
+
     public static JLabel getStatusLabel() {
         return statusLabel;
     }
@@ -101,4 +128,5 @@ public class ChessGameFrame extends JFrame {
     public static void setStatusLabel(String s) {
         ChessGameFrame.getStatusLabel().setText(s);
     }
+
 }
