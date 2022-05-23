@@ -129,4 +129,5 @@ public class ChessGameFrame extends JFrame {
         ChessGameFrame.getStatusLabel().setText(s);
     }
 
+
 }

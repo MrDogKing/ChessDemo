@@ -31,6 +31,7 @@ public class Chessboard extends JComponent {
     //all chessComponents in this chessboard are shared only one model controller
     private final ClickController clickController = new ClickController(this);
     private final int CHESS_SIZE;
+    private String winner = new String();
 
 
     public Chessboard(int width, int height) {
@@ -140,6 +141,14 @@ public class Chessboard extends JComponent {
     public void swapColor() {
         currentColor = currentColor == ChessColor.BLACK ? ChessColor.WHITE : ChessColor.BLACK;
         ChessGameFrame.getStatusLabel().setText(currentColor.getName() );
+        if(getWinner().equals("b") ){
+            JOptionPane.showMessageDialog(null,String.format("%40s","Winner is Black!") ,"END",JOptionPane.PLAIN_MESSAGE );
+            winner = "n";
+        }
+        else if(getWinner().equals("w") ){
+            JOptionPane.showMessageDialog(null,String.format("%40s","Winner is White!"),"END",JOptionPane.PLAIN_MESSAGE ) ;
+            winner = "n";
+        }
     }
 
     private void initRookOnBoard(int row, int col, ChessColor color) {
@@ -317,5 +326,30 @@ public class Chessboard extends JComponent {
 
     public void setCurrentColor(ChessColor currentColor) {
         this.currentColor = currentColor;
+    }
+
+    public String getWinner() {
+        int c = 2;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (this.chessComponents[i][j] instanceof KingChessComponent) {
+                    c--;
+                }
+            }
+        }
+        if (c == 1) {
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
+                    if (this.chessComponents[i][j] instanceof KingChessComponent) {
+                        if (this.chessComponents[i][j].getChessColor() == ChessColor.BLACK) {
+                            winner = "b";
+                        } else {
+                            winner = "w";
+                        }
+                    }
+                }
+            }
+        }
+        return winner;
     }
 }
