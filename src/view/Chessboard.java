@@ -191,6 +191,56 @@ public class Chessboard extends JComponent {
 
     public void loadGame(List<String> chessData) {
         chessData.forEach(System.out::println);
+        initiateEmptyChessboard() ;
+        for (int i = 0; i < chessData.size() - 1 ; i++) {
+            for (int j = 0; j < chessData.get(i).length() ; j++) {
+                char a = chessData.get(i).charAt(j);
+                if(a == 'R'){
+                    initRookOnBoard(i,j, ChessColor.BLACK ) ;
+                }
+                else if(a == 'r'){
+                    initRookOnBoard(i,j, ChessColor.WHITE  ) ;
+                }
+                else if(a == 'N'){
+                    initKnightOnBoard(i,j, ChessColor.BLACK ) ;
+                }
+                else if(a == 'n'){
+                    initKnightOnBoard(i,j, ChessColor.WHITE  ) ;
+                }
+                else if(a == 'B'){
+                    initBishopOnBoard(i,j, ChessColor.BLACK ) ;
+                }
+                else if(a == 'b'){
+                    initBishopOnBoard(i,j, ChessColor.WHITE  ) ;
+                }
+                else if(a == 'Q'){
+                    initQueenOnBoard(i,j, ChessColor.BLACK ) ;
+                }
+                else if(a == 'q'){
+                    initQueenOnBoard(i,j, ChessColor.WHITE  ) ;
+                }
+                else if(a == 'K'){
+                    initKingOnBoard(i,j, ChessColor.BLACK ) ;
+                }
+                else if(a == 'k'){
+                    initKingOnBoard(i,j, ChessColor.WHITE  ) ;
+                }
+                else if(a == 'P'){
+                    initPawnOnBoard(i,j, ChessColor.BLACK ) ;
+                }
+                else if(a == 'p'){
+                    initPawnOnBoard(i,j, ChessColor.WHITE  ) ;
+                }
+            }
+        }
+        if(chessData.get(8).equals("w") ){
+            setCurrentColor(ChessColor.WHITE ) ;
+        }
+        else if(chessData.get(8).equals("b") ){
+            setCurrentColor(ChessColor.BLACK ) ;
+        }
+        ChessGameFrame.setStatusLabel(getCurrentColor().getName()) ;
+        repaint();
     }
 
     public List<String> getChessBoard() {
@@ -263,5 +313,9 @@ public class Chessboard extends JComponent {
             result.add(s.toString() ) ;
         }
         return result ;
+    }
+
+    public void setCurrentColor(ChessColor currentColor) {
+        this.currentColor = currentColor;
     }
 }
