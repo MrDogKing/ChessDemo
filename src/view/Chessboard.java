@@ -144,10 +144,12 @@ public class Chessboard extends JComponent {
         if(getWinner().equals("b") ){
             JOptionPane.showMessageDialog(null,String.format("%40s","Winner is Black!") ,"END",JOptionPane.PLAIN_MESSAGE );
             winner = "n";
+            initBoard();
         }
         else if(getWinner().equals("w") ){
             JOptionPane.showMessageDialog(null,String.format("%40s","Winner is White!"),"END",JOptionPane.PLAIN_MESSAGE ) ;
             winner = "n";
+            initBoard();
         }
     }
 
