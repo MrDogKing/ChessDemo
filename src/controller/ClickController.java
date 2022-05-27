@@ -3,7 +3,10 @@ package controller;
 
 import model.ChessColor;
 import model.ChessComponent;
+import view.ChessGameFrame;
 import view.Chessboard;
+
+import java.awt.*;
 
 public class ClickController {
     private final Chessboard chessboard;
@@ -30,11 +33,13 @@ public class ClickController {
                 //repaint in swap chess method.
                 chessboard.swapChessComponents(first, chessComponent);
                 chessboard.swapColor();
+//                ChessGameFrame.getRegret().push(this.chessboard  );
                 first.setSelected(false);
                 first = null;
             }
         }
     }
+
 
     /**
      * @param chessComponent 目标选取的棋子
@@ -53,5 +58,9 @@ public class ClickController {
     private boolean handleSecond(ChessComponent chessComponent) {
         return chessComponent.getChessColor() != chessboard.getCurrentColor() &&
                 first.canMoveTo(chessboard.getChessComponents(), chessComponent.getChessboardPoint());
+    }
+
+    public ChessComponent getFirst() {
+        return first;
     }
 }

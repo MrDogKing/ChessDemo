@@ -16,11 +16,11 @@ public class KingChessComponent extends ChessComponent {
 
     public void loadResource() throws IOException {
         if (KING_WHITE == null) {
-            KING_WHITE = ImageIO.read(new File("./images/king-white.png"));
+            KING_WHITE = ImageIO.read(new File("./images/king-white11.png"));
         }
 
         if (KING_BLACK == null) {
-            KING_BLACK = ImageIO.read(new File("./images/king-black.png"));
+            KING_BLACK = ImageIO.read(new File("./images/king-black11.png"));
         }
     }
 
@@ -84,7 +84,7 @@ public class KingChessComponent extends ChessComponent {
         g.drawImage(kingImage, 0, 0, getWidth(), getHeight(), this);
         g.setColor(Color.BLACK);
         if (isSelected()) { // Highlights the model if selected.
-            g.setColor(Color.RED);
+            g.setColor(Color.YELLOW  );
             g.drawOval(0, 0, getWidth(), getHeight());
         }
     }

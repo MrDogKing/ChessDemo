@@ -16,11 +16,11 @@ public class PawnChessComponent extends ChessComponent {
 
     public void loadResource() throws IOException {
         if (PAWN_WHITE == null) {
-            PAWN_WHITE = ImageIO.read(new File("./images/pawn-white.png"));
+            PAWN_WHITE = ImageIO.read(new File("./images/pawn-white11.png"));
         }
 
         if (PAWN_BLACK == null) {
-            PAWN_BLACK = ImageIO.read(new File("./images/pawn-black.png"));
+            PAWN_BLACK = ImageIO.read(new File("./images/pawn-black11.png"));
         }
     }
 
@@ -113,7 +113,7 @@ public class PawnChessComponent extends ChessComponent {
         g.drawImage(pawnImage, 0, 0, getWidth(), getHeight(), this);
         g.setColor(Color.BLACK);
         if (isSelected()) { // Highlights the model if selected.
-            g.setColor(Color.RED);
+            g.setColor(Color.YELLOW );
             g.drawOval(0, 0, getWidth(), getHeight());
         }
     }

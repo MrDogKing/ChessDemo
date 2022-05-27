@@ -141,6 +141,7 @@ public class Chessboard extends JComponent {
     public void swapColor() {
         currentColor = currentColor == ChessColor.BLACK ? ChessColor.WHITE : ChessColor.BLACK;
         ChessGameFrame.getStatusLabel().setText(currentColor.getName() );
+        ChessGameFrame.getRegret().push(getChessBoard()) ;
         if(getWinner().equals("b") ){
             JOptionPane.showMessageDialog(null,String.format("%40s","Winner is Black!") ,"END",JOptionPane.PLAIN_MESSAGE );
             winner = "n";

@@ -49,9 +49,9 @@ public class ChessGameFrame1 extends JFrame  {
     }
 
     private void addBackGround(){
-        ImageIcon img = new ImageIcon("./images/bj2.png");
+        ImageIcon img = new ImageIcon("./images/bj4.png");
         JLabel background = new JLabel(img) ;
-        background.setBounds(0, -100,1000,1000) ;
+        background.setBounds(-180, -80,1000,1000) ;
         add(background ) ;
     }
 }

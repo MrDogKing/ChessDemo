@@ -96,12 +96,13 @@ public class GameController {
                         cnt++;
                     }
                 }
+            }
+                System.out.println(cnt);
                 if(cnt != 64){
                     JOptionPane.showMessageDialog(null,String.format("%40s","Error: 102") ,"Not Valid",JOptionPane.PLAIN_MESSAGE );
                     return null;
                 }
                 cnt = 0;
-            }
 
             chessboard.loadGame(chessData);
             return chessData;

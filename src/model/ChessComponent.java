@@ -5,6 +5,7 @@ import controller.ClickController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 
@@ -22,7 +23,7 @@ public abstract class ChessComponent extends JComponent {
      */
 
 //    private static final Dimension CHESSGRID_SIZE = new Dimension(1080 / 4 * 3 / 8, 1080 / 4 * 3 / 8);
-    private static final Color[] BACKGROUND_COLORS = {Color.WHITE, Color.BLACK};
+    private static final Color[] BACKGROUND_COLORS = {Color.WHITE, Color.DARK_GRAY };
     /**
      * handle click event
      */
@@ -38,11 +39,25 @@ public abstract class ChessComponent extends JComponent {
     private ChessboardPoint chessboardPoint;
     protected final ChessColor chessColor;
     private boolean selected;
+    private Color squareColor;
 
     protected ChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor chessColor, ClickController clickController, int size) {
         enableEvents(AWTEvent.MOUSE_EVENT_MASK);
         setLocation(location);
         setSize(size, size);
+        squareColor = BACKGROUND_COLORS[(chessboardPoint.getX() + chessboardPoint.getY()) % 2];
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                squareColor=Color.PINK;
+                repaint();
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                squareColor = BACKGROUND_COLORS[(chessboardPoint.getX() + chessboardPoint.getY()) % 2];
+                repaint();
+            }
+        });
         this.chessboardPoint = chessboardPoint;
         this.chessColor = chessColor;
         this.selected = false;
@@ -96,6 +111,9 @@ public abstract class ChessComponent extends JComponent {
             System.out.printf("Click [%d,%d]\n", chessboardPoint.getX(), chessboardPoint.getY());
             clickController.onClick(this);
         }
+//        if (e.getID() == MouseEvent.MOUSE_ENTERED) {
+//
+//        }
     }
 
     /**
@@ -118,9 +136,14 @@ public abstract class ChessComponent extends JComponent {
     protected void paintComponent(Graphics g) {
         super.paintComponents(g);
         System.out.printf("repaint chess [%d,%d]\n", chessboardPoint.getX(), chessboardPoint.getY());
-        Color squareColor = BACKGROUND_COLORS[(chessboardPoint.getX() + chessboardPoint.getY()) % 2];
         g.setColor(squareColor);
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
     }
+
+//    protected  void on(Graphics g) {
+//        super.paintComponent(g);
+//        g.setColor(Color.YELLOW  );
+//        g.drawOval(0, 0, getWidth() , getHeight()) ;
+//    }
 
 }

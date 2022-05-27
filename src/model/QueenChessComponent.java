@@ -15,11 +15,11 @@ public class QueenChessComponent extends ChessComponent {
 
     public void loadResource() throws IOException {
         if (QUEEN_WHITE == null) {
-            QUEEN_WHITE = ImageIO.read(new File("./images/queen-white.png"));
+            QUEEN_WHITE = ImageIO.read(new File("./images/queen-white11.png"));
         }
 
         if (QUEEN_BLACK == null) {
-            QUEEN_BLACK = ImageIO.read(new File("./images/queen-black.png"));
+            QUEEN_BLACK = ImageIO.read(new File("./images/queen-black11.png"));
         }
     }
 
@@ -91,7 +91,7 @@ public class QueenChessComponent extends ChessComponent {
         g.drawImage(queenImage, 0, 0, getWidth() , getHeight(), this);
         g.setColor(Color.BLACK);
         if (isSelected()) { // Highlights the model if selected.
-            g.setColor(Color.RED);
+            g.setColor(Color.YELLOW );
             g.drawOval(0, 0, getWidth() , getHeight());
         }
     }

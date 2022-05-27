@@ -15,11 +15,11 @@ public class BishopChessComponent extends ChessComponent {
 
     public void loadResource() throws IOException {
         if (BISHOP_WHITE == null) {
-            BISHOP_WHITE = ImageIO.read(new File("./images/bishop-white.png"));
+            BISHOP_WHITE = ImageIO.read(new File("./images/bishop-white11.png"));
         }
 
         if (BISHOP_BLACK == null) {
-            BISHOP_BLACK = ImageIO.read(new File("./images/bishop-black.png"));
+            BISHOP_BLACK = ImageIO.read(new File("./images/bishop-black11.png"));
         }
     }
 
@@ -76,7 +76,7 @@ public class BishopChessComponent extends ChessComponent {
         g.drawImage(bishopImage, 0, 0, getWidth() , getHeight(), this);
         g.setColor(Color.BLACK);
         if (isSelected()) { // Highlights the model if selected.
-            g.setColor(Color.RED);
+            g.setColor(Color.YELLOW  );
             g.drawOval(0, 0, getWidth() , getHeight());
         }
     }

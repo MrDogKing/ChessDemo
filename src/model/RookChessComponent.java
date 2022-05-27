@@ -32,11 +32,11 @@ public class RookChessComponent extends ChessComponent {
      */
     public void loadResource() throws IOException {
         if (ROOK_WHITE == null) {
-            ROOK_WHITE = ImageIO.read(new File("./images/rook-white.png"));
+            ROOK_WHITE = ImageIO.read(new File("./images/rook-white11.png"));
         }
 
         if (ROOK_BLACK == null) {
-            ROOK_BLACK = ImageIO.read(new File("./images/rook-black.png"));
+            ROOK_BLACK = ImageIO.read(new File("./images/rook-black11.png"));
         }
     }
 
@@ -110,8 +110,15 @@ public class RookChessComponent extends ChessComponent {
         g.drawImage(rookImage, 0, 0, getWidth() , getHeight(), this);
         g.setColor(Color.BLACK);
         if (isSelected()) { // Highlights the model if selected.
-            g.setColor(Color.RED);
-            g.drawOval(0, 0, getWidth() , getHeight());
+            g.setColor(Color.YELLOW  );
+            g.drawOval(0, 0, getWidth() , getHeight()) ;
         }
     }
+
+    protected void on(Graphics g) {
+        super.paintComponent(g);
+            g.setColor(Color.YELLOW  );
+            g.drawOval(0, 0, getWidth() , getHeight()) ;
+    }
+
 }
