@@ -7,6 +7,8 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class QueenChessComponent extends ChessComponent {
     private static Image QUEEN_WHITE;
@@ -36,8 +38,8 @@ public class QueenChessComponent extends ChessComponent {
         }
     }
 
-    public QueenChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor color, ClickController listener, int size) {
-        super(chessboardPoint, location, color, listener, size);
+    public QueenChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor color, ClickController listener, int size,ChessComponent[][] chessComponents) {
+        super(chessboardPoint, location, color, listener, size, chessComponents );
         initiateQueenImage(color);
     }
 
@@ -94,5 +96,163 @@ public class QueenChessComponent extends ChessComponent {
             g.setColor(Color.YELLOW );
             g.drawOval(0, 0, getWidth() , getHeight());
         }
+    }
+
+    @Override
+    public List<ChessboardPoint> canMovePoints() {
+        ArrayList<ChessboardPoint > move = new ArrayList<>();
+        // +x
+        for (int i = 1; i < 8; i++) {
+            if(this.getChessboardPoint().offset(i ,0) != null) {
+                ChessColor j = this.getChessComponents()[this.getChessboardPoint().getX()+i][this.getChessboardPoint().getY()].getChessColor();
+                if(j == this.getChessColor()){
+                    break ;
+                }
+                else if(j != this.getChessColor() && j != ChessColor.NONE ){
+                    move.add(this.getChessboardPoint().offset(i ,0)) ;
+                    break;
+                }
+                else if(j == ChessColor.NONE ){
+                    move.add(this.getChessboardPoint().offset(i ,0)) ;
+                }
+            }
+            else {
+                break;
+            }
+        }
+        // -x
+        for (int i = 1; i < 8; i++) {
+            if(this.getChessboardPoint().offset(-i ,0) != null) {
+                ChessColor j = this.getChessComponents()[this.getChessboardPoint().getX()-i][this.getChessboardPoint().getY()].getChessColor();
+                if(j == this.getChessColor()){
+                    break ;
+                }
+                else if(j != this.getChessColor() && j != ChessColor.NONE ){
+                    move.add(this.getChessboardPoint().offset(-i ,0)) ;
+                    break;
+                }
+                else if(j == ChessColor.NONE ){
+                    move.add(this.getChessboardPoint().offset(-i ,0)) ;
+                }
+            }
+            else {
+                break;
+            }
+        }
+        // +y
+        for (int i = 1; i < 8; i++) {
+            if(this.getChessboardPoint().offset(0 ,i) != null) {
+                ChessColor j = this.getChessComponents()[this.getChessboardPoint().getX()][this.getChessboardPoint().getY()+i].getChessColor();
+                if(j == this.getChessColor()){
+                    break ;
+                }
+                else if(j != this.getChessColor() && j != ChessColor.NONE ){
+                    move.add(this.getChessboardPoint().offset(0 ,i)) ;
+                    break;
+                }
+                else if(j == ChessColor.NONE ){
+                    move.add(this.getChessboardPoint().offset(0 ,i)) ;
+                }
+            }
+            else {
+                break;
+            }
+        }
+        // -y
+        for (int i = 1; i < 8; i++) {
+            if(this.getChessboardPoint().offset(0 ,-i) != null) {
+                ChessColor j = this.getChessComponents()[this.getChessboardPoint().getX()][this.getChessboardPoint().getY()-i].getChessColor();
+                if(j == this.getChessColor()){
+                    break ;
+                }
+                else if(j != this.getChessColor() && j != ChessColor.NONE ){
+                    move.add(this.getChessboardPoint().offset(0 ,-i)) ;
+                    break;
+                }
+                else if(j == ChessColor.NONE ){
+                    move.add(this.getChessboardPoint().offset(0 ,-i)) ;
+                }
+            }
+            else {
+                break;
+            }
+        }
+        // +x +y
+        for (int i = 1; i < 8; i++) {
+            if(this.getChessboardPoint().offset(i ,i) != null) {
+                ChessColor j = this.getChessComponents()[this.getChessboardPoint().getX()+i][this.getChessboardPoint().getY()+i].getChessColor();
+                if(j == this.getChessColor()){
+                    break ;
+                }
+                else if(j != this.getChessColor() && j != ChessColor.NONE ){
+                    move.add(this.getChessboardPoint().offset(i ,i)) ;
+                    break;
+                }
+                else if(j == ChessColor.NONE ){
+                    move.add(this.getChessboardPoint().offset(i ,i)) ;
+                }
+            }
+            else {
+                break;
+            }
+        }
+        // -x -y
+        for (int i = 1; i < 8; i++) {
+            if(this.getChessboardPoint().offset(-i ,-i) != null) {
+                ChessColor j = this.getChessComponents()[this.getChessboardPoint().getX()-i][this.getChessboardPoint().getY()-i].getChessColor();
+                if(j == this.getChessColor()){
+                    break ;
+                }
+                else if(j != this.getChessColor() && j != ChessColor.NONE ){
+                    move.add(this.getChessboardPoint().offset(-i ,-i)) ;
+                    break;
+                }
+                else if(j == ChessColor.NONE ){
+                    move.add(this.getChessboardPoint().offset(-i ,-i)) ;
+                }
+            }
+            else {
+                break;
+            }
+        }
+        // -x +y
+        for (int i = 1; i < 8; i++) {
+            if(this.getChessboardPoint().offset(-i ,+i) != null) {
+                ChessColor j = this.getChessComponents()[this.getChessboardPoint().getX()-i][this.getChessboardPoint().getY()+i].getChessColor();
+                if(j == this.getChessColor()){
+                    break ;
+                }
+                else if(j != this.getChessColor() && j != ChessColor.NONE ){
+                    move.add(this.getChessboardPoint().offset(-i ,+i)) ;
+                    break;
+                }
+                else if(j == ChessColor.NONE ){
+                    move.add(this.getChessboardPoint().offset(-i ,+i)) ;
+                }
+            }
+            else {
+                break;
+            }
+        }
+        // +x -y
+        for (int i = 1; i < 8; i++) {
+            if(this.getChessboardPoint().offset(i ,-i) != null) {
+                ChessColor j = this.getChessComponents()[this.getChessboardPoint().getX()+i][this.getChessboardPoint().getY()-i].getChessColor();
+                if(j == this.getChessColor()){
+                    break ;
+                }
+                else if(j != this.getChessColor() && j != ChessColor.NONE ){
+                    move.add(this.getChessboardPoint().offset(i ,-i)) ;
+                    break;
+                }
+                else if(j == ChessColor.NONE ){
+                    move.add(this.getChessboardPoint().offset(i ,-i)) ;
+                }
+            }
+            else {
+                break;
+            }
+        }
+        return move;
     }
 }

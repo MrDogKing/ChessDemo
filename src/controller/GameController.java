@@ -97,7 +97,7 @@ public class GameController {
                     }
                 }
             }
-                System.out.println(cnt);
+//                System.out.println(cnt);
                 if(cnt != 64){
                     JOptionPane.showMessageDialog(null,String.format("%40s","Error: 102") ,"Not Valid",JOptionPane.PLAIN_MESSAGE );
                     return null;

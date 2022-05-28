@@ -7,6 +7,8 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class KnightChessComponent extends ChessComponent {
@@ -37,8 +39,8 @@ public class KnightChessComponent extends ChessComponent {
         }
     }
 
-    public KnightChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor color, ClickController listener, int size) {
-        super(chessboardPoint, location, color, listener, size);
+    public KnightChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor color, ClickController listener, int size,ChessComponent[][] chessComponents) {
+        super(chessboardPoint, location, color, listener, size, chessComponents );
         initiateKnightImage(color);
     }
 
@@ -106,5 +108,75 @@ public class KnightChessComponent extends ChessComponent {
             g.setColor(Color.YELLOW );
             g.drawOval(0, 0, getWidth(), getHeight());
         }
+    }
+
+    @Override
+    public List<ChessboardPoint> canMovePoints() {
+        ArrayList<ChessboardPoint > move = new ArrayList<>();
+        // x+1,y+2
+        if(this.getChessboardPoint().offset(1 ,2) != null) {
+            ChessColor j = this.getChessComponents()[this.getChessboardPoint().getX()+1][this.getChessboardPoint().getY()+2].getChessColor();
+            if(j != this.getChessColor() ){
+                move.add(this.getChessboardPoint().offset(1 ,2)) ;
+            }
+        }
+
+        // x+1,y-2
+        if(this.getChessboardPoint().offset(1 ,-2) != null) {
+            ChessColor j = this.getChessComponents()[this.getChessboardPoint().getX()+1][this.getChessboardPoint().getY()-2].getChessColor();
+            if(j != this.getChessColor()  ){
+                move.add(this.getChessboardPoint().offset(1 ,-2)) ;
+            }
+        }
+
+        // x+2,y+1
+        if(this.getChessboardPoint().offset(2 ,1) != null) {
+            ChessColor j = this.getChessComponents()[this.getChessboardPoint().getX()+2][this.getChessboardPoint().getY()+1].getChessColor();
+            if(j != this.getChessColor()  ){
+                move.add(this.getChessboardPoint().offset(2 ,1)) ;
+            }
+        }
+
+        // x+2,y-1
+        if(this.getChessboardPoint().offset(2 ,-1) != null) {
+            ChessColor j = this.getChessComponents()[this.getChessboardPoint().getX()+2][this.getChessboardPoint().getY()-1].getChessColor();
+            if(j != this.getChessColor()  ){
+                move.add(this.getChessboardPoint().offset(2 ,-1)) ;
+            }
+        }
+
+        // x-1,y+2
+        if(this.getChessboardPoint().offset(-1 ,2) != null) {
+            ChessColor j = this.getChessComponents()[this.getChessboardPoint().getX()-1][this.getChessboardPoint().getY()+2].getChessColor();
+            if(j != this.getChessColor() ){
+                move.add(this.getChessboardPoint().offset(-1 ,2)) ;
+            }
+        }
+
+        // x-1,y-2
+        if(this.getChessboardPoint().offset(-1 ,-2) != null) {
+            ChessColor j = this.getChessComponents()[this.getChessboardPoint().getX()-1][this.getChessboardPoint().getY()-2].getChessColor();
+            if(j != this.getChessColor()  ){
+                move.add(this.getChessboardPoint().offset(-1 ,-2)) ;
+            }
+        }
+
+        // x-2,y+1
+        if(this.getChessboardPoint().offset(-2 ,+1) != null) {
+            ChessColor j = this.getChessComponents()[this.getChessboardPoint().getX()-2][this.getChessboardPoint().getY()+1].getChessColor();
+            if(j != this.getChessColor() ){
+                move.add(this.getChessboardPoint().offset(-2 ,+1)) ;
+            }
+        }
+
+        // x-2,y-1
+        if(this.getChessboardPoint().offset(-2 ,-1) != null) {
+            ChessColor j = this.getChessComponents()[this.getChessboardPoint().getX()-2][this.getChessboardPoint().getY()-1].getChessColor();
+            if(j != this.getChessColor()  ){
+                move.add(this.getChessboardPoint().offset(-2 ,-1) );
+            }
+        }
+
+        return move;
     }
 }

@@ -7,6 +7,8 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 这个类表示国际象棋里面的车
@@ -60,8 +62,8 @@ public class RookChessComponent extends ChessComponent {
         }
     }
 
-    public RookChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor color, ClickController listener, int size) {
-        super(chessboardPoint, location, color, listener, size);
+    public RookChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor color, ClickController listener, int size,ChessComponent[][] chessComponents) {
+        super(chessboardPoint, location, color, listener, size, chessComponents );
         initiateRookImage(color);
     }
 
@@ -121,4 +123,85 @@ public class RookChessComponent extends ChessComponent {
             g.drawOval(0, 0, getWidth() , getHeight()) ;
     }
 
+    @Override
+    public List<ChessboardPoint> canMovePoints() {
+        ArrayList<ChessboardPoint > move = new ArrayList<>();
+        // +x
+        for (int i = 1; i < 8; i++) {
+            if(this.getChessboardPoint().offset(i ,0) != null) {
+                ChessColor j = this.getChessComponents()[this.getChessboardPoint().getX()+i][this.getChessboardPoint().getY()].getChessColor();
+                if(j == this.getChessColor()){
+                    break ;
+                }
+                else if(j != this.getChessColor() && j != ChessColor.NONE ){
+                    move.add(this.getChessboardPoint().offset(i ,0)) ;
+                    break;
+                }
+                else if(j == ChessColor.NONE ){
+                    move.add(this.getChessboardPoint().offset(i ,0)) ;
+                }
+            }
+            else {
+                break;
+            }
+        }
+        // -x
+        for (int i = 1; i < 8; i++) {
+            if(this.getChessboardPoint().offset(-i ,0) != null) {
+                ChessColor j = this.getChessComponents()[this.getChessboardPoint().getX()-i][this.getChessboardPoint().getY()].getChessColor();
+                if(j == this.getChessColor()){
+                    break ;
+                }
+                else if(j != this.getChessColor() && j != ChessColor.NONE ){
+                    move.add(this.getChessboardPoint().offset(-i ,0)) ;
+                    break;
+                }
+                else if(j == ChessColor.NONE ){
+                    move.add(this.getChessboardPoint().offset(-i ,0)) ;
+                }
+            }
+            else {
+                break;
+            }
+        }
+        // +y
+        for (int i = 1; i < 8; i++) {
+            if(this.getChessboardPoint().offset(0 ,i) != null) {
+                ChessColor j = this.getChessComponents()[this.getChessboardPoint().getX()][this.getChessboardPoint().getY()+i].getChessColor();
+                if(j == this.getChessColor()){
+                    break ;
+                }
+                else if(j != this.getChessColor() && j != ChessColor.NONE ){
+                    move.add(this.getChessboardPoint().offset(0 ,i)) ;
+                    break;
+                }
+                else if(j == ChessColor.NONE ){
+                    move.add(this.getChessboardPoint().offset(0 ,i)) ;
+                }
+            }
+            else {
+                break;
+            }
+        }
+        // -y
+        for (int i = 1; i < 8; i++) {
+            if(this.getChessboardPoint().offset(0 ,-i) != null) {
+                ChessColor j = this.getChessComponents()[this.getChessboardPoint().getX()][this.getChessboardPoint().getY()-i].getChessColor();
+                if(j == this.getChessColor()){
+                    break ;
+                }
+                else if(j != this.getChessColor() && j != ChessColor.NONE ){
+                    move.add(this.getChessboardPoint().offset(0 ,-i)) ;
+                    break;
+                }
+                else if(j == ChessColor.NONE ){
+                    move.add(this.getChessboardPoint().offset(0 ,-i)) ;
+                }
+            }
+            else {
+                break;
+            }
+        }
+        return move;
+    }
 }

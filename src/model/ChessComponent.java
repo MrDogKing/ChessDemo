@@ -1,13 +1,17 @@
 package model;
 
+import view.Chessboard;
 import view.ChessboardPoint;
 import controller.ClickController;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * 这个类是一个抽象类，主要表示8*8棋盘上每个格子的棋子情况，当前有两个子类继承它，分别是EmptySlotComponent(空棋子)和RookChessComponent(车)。
@@ -24,10 +28,13 @@ public abstract class ChessComponent extends JComponent {
 
 //    private static final Dimension CHESSGRID_SIZE = new Dimension(1080 / 4 * 3 / 8, 1080 / 4 * 3 / 8);
     private static final Color[] BACKGROUND_COLORS = {Color.WHITE, Color.DARK_GRAY };
+    private static Image a;
+    private static Image b;
     /**
      * handle click event
      */
     private ClickController clickController;
+    public int ys = 0;
 
     /**
      * chessboardPoint: 表示8*8棋盘中，当前棋子在棋格对应的位置，如(0, 0), (1, 0), (0, 7),(7, 7)等等
@@ -40,11 +47,20 @@ public abstract class ChessComponent extends JComponent {
     protected final ChessColor chessColor;
     private boolean selected;
     private Color squareColor;
+    private ChessComponent[][] chessComponents ;
 
-    protected ChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor chessColor, ClickController clickController, int size) {
+    protected ChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor chessColor, ClickController clickController, int size,ChessComponent[][] chessComponents)  {
         enableEvents(AWTEvent.MOUSE_EVENT_MASK);
         setLocation(location);
         setSize(size, size);
+        //更换棋盘图片
+        try {
+            a=ImageIO.read(new File("./images/bj5.png"));
+            b=ImageIO.read(new File("./images/bj6.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         squareColor = BACKGROUND_COLORS[(chessboardPoint.getX() + chessboardPoint.getY()) % 2];
         this.addMouseListener(new MouseAdapter() {
             @Override
@@ -62,10 +78,16 @@ public abstract class ChessComponent extends JComponent {
         this.chessColor = chessColor;
         this.selected = false;
         this.clickController = clickController;
+        this.chessComponents = chessComponents;
     }
+
 
     public ChessboardPoint getChessboardPoint() {
         return chessboardPoint;
+    }
+
+    public ChessComponent[][] getChessComponents() {
+        return chessComponents;
     }
 
     public void setChessboardPoint(ChessboardPoint chessboardPoint) {
@@ -111,9 +133,6 @@ public abstract class ChessComponent extends JComponent {
             System.out.printf("Click [%d,%d]\n", chessboardPoint.getX(), chessboardPoint.getY());
             clickController.onClick(this);
         }
-//        if (e.getID() == MouseEvent.MOUSE_ENTERED) {
-//
-//        }
     }
 
     /**
@@ -135,15 +154,28 @@ public abstract class ChessComponent extends JComponent {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponents(g);
-        System.out.printf("repaint chess [%d,%d]\n", chessboardPoint.getX(), chessboardPoint.getY());
+        if(squareColor!=Color.PINK){
+            squareColor = BACKGROUND_COLORS[(chessboardPoint.getX() + chessboardPoint.getY()) % 2];
+        }
         g.setColor(squareColor);
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
+//        System.out.printf("repaint chess [%d,%d]\n", chessboardPoint.getX(), chessboardPoint.getY());
+        if(squareColor.equals(Color.DARK_GRAY)) g.drawImage(a,0,0,this.getWidth(),this.getHeight(),this);
+        else if(squareColor.equals(Color.WHITE)) g.drawImage(b,0,0,this.getWidth(),this.getHeight(),this);
+        //可走路径
+        if(this.ys == 1) {
+            g.setColor(Color.RED  );
+            g.fillRect(0, 0, this.getWidth(), this.getHeight());
+        }
     }
 
-//    protected  void on(Graphics g) {
-//        super.paintComponent(g);
-//        g.setColor(Color.YELLOW  );
-//        g.drawOval(0, 0, getWidth() , getHeight()) ;
-//    }
+    public abstract List<ChessboardPoint> canMovePoints();
 
+    public void setYs(int ys) {
+        this.ys = ys;
+    }
+
+    public int getYs() {
+        return ys;
+    }
 }

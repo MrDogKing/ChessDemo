@@ -1,5 +1,6 @@
 package model;
 
+import view.Chessboard;
 import view.ChessboardPoint;
 import controller.ClickController;
 
@@ -7,6 +8,8 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class KingChessComponent extends ChessComponent {
@@ -37,8 +40,8 @@ public class KingChessComponent extends ChessComponent {
         }
     }
 
-    public KingChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor color, ClickController listener, int size) {
-        super(chessboardPoint, location, color, listener, size);
+    public KingChessComponent(ChessboardPoint chessboardPoint, Point location, ChessColor color, ClickController listener, int size, ChessComponent[][] chessComponents) {
+        super(chessboardPoint, location, color, listener, size, chessComponents  );
         initiateKingImage(color);
     }
 
@@ -87,5 +90,34 @@ public class KingChessComponent extends ChessComponent {
             g.setColor(Color.YELLOW  );
             g.drawOval(0, 0, getWidth(), getHeight());
         }
+    }
+    @Override
+    public List<ChessboardPoint> canMovePoints() {
+        ArrayList<ChessboardPoint > move = new ArrayList<>();
+        if( this.getChessboardPoint().offset(1,0) != null && this.getChessComponents()[this.getChessboardPoint().getX()+1][this.getChessboardPoint().getY()].getChessColor() != this.getChessColor()){
+            move.add(this.getChessboardPoint().offset(1,0) ) ;
+        }
+        if(this.getChessboardPoint().offset(0,1) != null && this.getChessComponents()[this.getChessboardPoint().getX()][this.getChessboardPoint().getY()+1].getChessColor() != this.getChessColor()){
+            move.add(this.getChessboardPoint().offset(0,1) ) ;
+        }
+        if( this.getChessboardPoint().offset(-1,0) != null && this.getChessComponents()[this.getChessboardPoint().getX()-1][this.getChessboardPoint().getY()].getChessColor() != this.getChessColor()){
+            move.add(this.getChessboardPoint().offset(-1,0) ) ;
+        }
+        if( this.getChessboardPoint().offset(0,-1) != null && this.getChessComponents()[this.getChessboardPoint().getX()][this.getChessboardPoint().getY()-1].getChessColor() != this.getChessColor()){
+            move.add(this.getChessboardPoint().offset(0,-1) ) ;
+        }
+        if( this.getChessboardPoint().offset(1,1) != null && this.getChessComponents()[this.getChessboardPoint().getX()+1][this.getChessboardPoint().getY()+1].getChessColor() != this.getChessColor()){
+            move.add(this.getChessboardPoint().offset(1,1) ) ;
+        }
+        if(this.getChessboardPoint().offset(1,-1) != null && this.getChessComponents()[this.getChessboardPoint().getX()+1][this.getChessboardPoint().getY()-1].getChessColor() != this.getChessColor()){
+            move.add(this.getChessboardPoint().offset(1,-1) ) ;
+        }
+        if( this.getChessboardPoint().offset(-1,1) != null && this.getChessComponents()[this.getChessboardPoint().getX()-1][this.getChessboardPoint().getY()+1].getChessColor() != this.getChessColor()){
+            move.add(this.getChessboardPoint().offset(-1,1) ) ;
+        }
+        if( this.getChessboardPoint().offset(-1,-1) != null && this.getChessComponents()[this.getChessboardPoint().getX()-1][this.getChessboardPoint().getY()-1].getChessColor() != this.getChessColor()){
+            move.add(this.getChessboardPoint().offset(-1,-1) ) ;
+        }
+        return move;
     }
 }
