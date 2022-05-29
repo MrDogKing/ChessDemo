@@ -29,7 +29,7 @@ public class Chessboard extends JComponent {
     private final ChessComponent[][] chessComponents = new ChessComponent[CHESSBOARD_SIZE][CHESSBOARD_SIZE];
     private ChessColor currentColor = ChessColor.WHITE ;
     //all chessComponents in this chessboard are shared only one model controller
-    private final ClickController clickController = new ClickController(this);
+    private final ClickController clickController = new ClickController(this,ChessGameFrame1.getMode() );
     private final int CHESS_SIZE;
     private String winner = new String();
 
@@ -172,17 +172,20 @@ public class Chessboard extends JComponent {
         currentColor = currentColor == ChessColor.BLACK ? ChessColor.WHITE : ChessColor.BLACK;
         ChessGameFrame.getStatusLabel().setText(currentColor.getName() );
         ChessGameFrame.getRegret().push(getChessBoard()) ;
+        ChessGameFrame.getTimeLabel().setText("15") ;
         if(getWinner().equals("b") ){
             JOptionPane.showMessageDialog(null,String.format("%40s","Winner is Black!") ,"END",JOptionPane.PLAIN_MESSAGE );
             winner = "n";
             initBoard();
             ChessGameFrame.getRegret() .init() ;
+            ChessGameFrame.getTimeLabel().setText("15") ;
         }
         else if(getWinner().equals("w") ){
             JOptionPane.showMessageDialog(null,String.format("%40s","Winner is White!"),"END",JOptionPane.PLAIN_MESSAGE ) ;
             winner = "n";
             initBoard();
             ChessGameFrame.getRegret() .init() ;
+            ChessGameFrame.getTimeLabel().setText("15") ;
         }
     }
 

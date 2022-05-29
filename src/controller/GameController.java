@@ -134,4 +134,8 @@ public class GameController {
         }
         return this.chessboard.getChessBoard() ;
     }
+
+    public Chessboard getChessboard() {
+        return chessboard;
+    }
 }
