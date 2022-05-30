@@ -1,9 +1,7 @@
 package controller;
 
 
-import model.ChessColor;
-import model.ChessComponent;
-import model.PawnChessComponent;
+import model.*;
 import view.ChessGameFrame;
 import view.Chessboard;
 import view.ChessboardPoint;
@@ -11,6 +9,7 @@ import view.Music;
 
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -133,8 +132,8 @@ public class ClickController {
                         first.setSelected(false);
                         first = null;
 
-                        int x = 0;
-                        int y = 0;
+                        int x ;
+                        int y ;
                         while(true){
                             int x1 = new Random().nextInt(8) ;
                             int y1 = new Random().nextInt(8) ;
@@ -156,6 +155,7 @@ public class ClickController {
                 }
             }
         }
+        //greedy AI
         else if(mode == 2){
             if(chessboard.getCurrentColor() == ChessColor.WHITE ){
                 if (first == null) {
@@ -210,29 +210,171 @@ public class ClickController {
                         first = null;
 
                         //greedy
-                        int x = 0;
-                        int y = 0;
-                        while(true){
-                            int x1 = new Random().nextInt(8) ;
-                            int y1 = new Random().nextInt(8) ;
-                            ChessComponent chess = chessboard.getChessComponents() [x1][y1];
-                            if(chess.getChessColor() == ChessColor.BLACK && chess.canMovePoints().size() != 0){
-                                x = x1;
-                                y = y1;
-                                break;
+                        ChessComponent chess ;
+                        ChessComponent chess1;
+                        List <ChessComponent> canChess = new ArrayList<>();
+                        List <ChessComponent> eatChess = new ArrayList<>();
+                        //find can move chess
+                        for (int i = 0; i < 8; i++) {
+                            for (int j = 0; j < 8; j++) {
+                                ChessComponent c = chessboard.getChessComponents() [i][j];
+                                if( c.getChessColor() == ChessColor.BLACK && c.canMovePoints().size() != 0){
+                                    canChess.add(c) ;
+                                }
                             }
                         }
-                        ChessComponent chess = chessboard.getChessComponents() [x][y];
-                        int move = new Random().nextInt(chess.canMovePoints().size()) ;
-                        int x1 = chess.canMovePoints().get(move).getX() ;
-                        int y1 = chess.canMovePoints().get(move).getY() ;
-                        ChessComponent chess1 = chessboard.getChessComponents() [x1][y1];
+                        //find can eat chess
+                        for (int i = 0; i < canChess.size() ; i++) {
+                            for (int j = 0; j < canChess.get(i).canMovePoints().size() ; j++) {
+                                int x = canChess.get(i).canMovePoints().get(j).getX() ;
+                                int y = canChess.get(i).canMovePoints().get(j).getY() ;
+                                if( chessboard.getChessComponents() [x][y].getChessColor() == ChessColor.WHITE ){
+                                    eatChess.add(canChess.get(i)) ;
+                                }
+                            }
+                        }
+                        //choose best
+                        if(choose(eatChess) != null ){
+                            chess = choose(eatChess);
+                            int x = choose1(chess).getX() ;
+                            int y = choose1(chess).getY() ;
+                            chess1 = chessboard.getChessComponents() [x][y];
+                        }
+                        else{
+                            int i = new Random().nextInt(canChess.size()) ;
+                            chess = canChess.get(i);
+                            int j = new Random().nextInt(chess.canMovePoints().size()) ;
+                            int x = chess.canMovePoints().get(j).getX() ;
+                            int y = chess.canMovePoints().get(j).getY() ;
+                            chess1 = chessboard.getChessComponents() [x][y];
+                        }
                         chessboard.swapChessComponents(chess, chess1);
                         chessboard.swapColor();
                     }
                 }
             }
         }
+    }
+
+    private ChessComponent choose(List<ChessComponent> can ){
+        for (int i = 0; i < can.size() ; i++) {
+            ChessComponent c = can.get(i);
+            for (int j = 0; j < c.canMovePoints().size() ; j++) {
+                int x = c.canMovePoints().get(j).getX() ;
+                int y = c.canMovePoints().get(j).getY() ;
+                if(chessboard.getChessComponents()[x][y] instanceof KingChessComponent ){
+                    return c;
+                }
+            }
+        }
+
+        for (int i = 0; i < can.size() ; i++) {
+            ChessComponent c = can.get(i);
+            for (int j = 0; j < c.canMovePoints().size() ; j++) {
+                int x = c.canMovePoints().get(j).getX() ;
+                int y = c.canMovePoints().get(j).getY() ;
+                if(chessboard.getChessComponents()[x][y] instanceof QueenChessComponent){
+                    return c;
+                }
+            }
+        }
+
+        for (int i = 0; i < can.size() ; i++) {
+            ChessComponent c = can.get(i);
+            for (int j = 0; j < c.canMovePoints().size() ; j++) {
+                int x = c.canMovePoints().get(j).getX() ;
+                int y = c.canMovePoints().get(j).getY() ;
+                if(chessboard.getChessComponents()[x][y] instanceof BishopChessComponent ){
+                    return c;
+                }
+            }
+        }
+
+        for (int i = 0; i < can.size() ; i++) {
+            ChessComponent c = can.get(i);
+            for (int j = 0; j < c.canMovePoints().size() ; j++) {
+                int x = c.canMovePoints().get(j).getX() ;
+                int y = c.canMovePoints().get(j).getY() ;
+                if(chessboard.getChessComponents()[x][y] instanceof KnightChessComponent  ){
+                    return c;
+                }
+            }
+        }
+
+        for (int i = 0; i < can.size() ; i++) {
+            ChessComponent c = can.get(i);
+            for (int j = 0; j < c.canMovePoints().size() ; j++) {
+                int x = c.canMovePoints().get(j).getX() ;
+                int y = c.canMovePoints().get(j).getY() ;
+                if(chessboard.getChessComponents()[x][y] instanceof RookChessComponent  ){
+                    return c;
+                }
+            }
+        }
+
+        for (int i = 0; i < can.size() ; i++) {
+            ChessComponent c = can.get(i);
+            for (int j = 0; j < c.canMovePoints().size() ; j++) {
+                int x = c.canMovePoints().get(j).getX() ;
+                int y = c.canMovePoints().get(j).getY() ;
+                if(chessboard.getChessComponents()[x][y] instanceof PawnChessComponent ){
+                    return c;
+                }
+            }
+        }
+        return null;
+    }
+
+    private ChessboardPoint choose1(ChessComponent c){
+        for (int j = 0; j < c.canMovePoints().size() ; j++) {
+            int x = c.canMovePoints().get(j).getX() ;
+            int y = c.canMovePoints().get(j).getY() ;
+            if(chessboard.getChessComponents()[x][y] instanceof KingChessComponent ){
+                return c.canMovePoints().get(j) ;
+            }
+        }
+
+        for (int j = 0; j < c.canMovePoints().size() ; j++) {
+            int x = c.canMovePoints().get(j).getX() ;
+            int y = c.canMovePoints().get(j).getY() ;
+            if(chessboard.getChessComponents()[x][y] instanceof QueenChessComponent ){
+                return c.canMovePoints().get(j) ;
+            }
+        }
+
+        for (int j = 0; j < c.canMovePoints().size() ; j++) {
+            int x = c.canMovePoints().get(j).getX() ;
+            int y = c.canMovePoints().get(j).getY() ;
+            if(chessboard.getChessComponents()[x][y] instanceof BishopChessComponent ){
+                return c.canMovePoints().get(j) ;
+            }
+        }
+
+        for (int j = 0; j < c.canMovePoints().size() ; j++) {
+            int x = c.canMovePoints().get(j).getX() ;
+            int y = c.canMovePoints().get(j).getY() ;
+            if(chessboard.getChessComponents()[x][y] instanceof KnightChessComponent  ){
+                return c.canMovePoints().get(j) ;
+            }
+        }
+
+        for (int j = 0; j < c.canMovePoints().size() ; j++) {
+            int x = c.canMovePoints().get(j).getX() ;
+            int y = c.canMovePoints().get(j).getY() ;
+            if(chessboard.getChessComponents()[x][y] instanceof RookChessComponent ){
+                return c.canMovePoints().get(j) ;
+            }
+        }
+
+        for (int j = 0; j < c.canMovePoints().size() ; j++) {
+            int x = c.canMovePoints().get(j).getX() ;
+            int y = c.canMovePoints().get(j).getY() ;
+            if(chessboard.getChessComponents()[x][y] instanceof PawnChessComponent ){
+                return c.canMovePoints().get(j) ;
+            }
+        }
+
+        return null;
     }
 
 
