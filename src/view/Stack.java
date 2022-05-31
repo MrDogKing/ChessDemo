@@ -24,4 +24,7 @@ public class Stack<T> {
         return elements.get(0);
     }
 
+    public ArrayList<T> getElements() {
+        return elements;
+    }
 }

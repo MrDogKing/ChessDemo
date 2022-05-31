@@ -28,7 +28,7 @@ public class ClickController {
             if (first == null) {
                 if (handleFirst(chessComponent)) {
                     //music
-                    Music clickMusic = new Music("./Music/clickMusic.wav");
+                    Music clickMusic = new Music("./Music/叮咚.wav");
                     clickMusic.playMusic() ;
                     for (int i = 0; i < chessComponent.canMovePoints().size(); i++) {
                         int x = chessComponent.canMovePoints().get(i).getX();
@@ -60,10 +60,11 @@ public class ClickController {
                         first.getChessComponents()[x][y].repaint();
                     }
                     //music
-                    Music clickMusic = new Music("./Music/clickMusic.wav");
+                    Music clickMusic = new Music("./Music/叮咚.wav");
                     clickMusic.playMusic() ;
                     //huanyuan
                     chessboard.swapChessComponents(first, chessComponent);
+                    //兵的升变
                     if (first instanceof PawnChessComponent) {
                         if (first.getChessColor() == ChessColor.WHITE && chessComponent.getChessboardPoint().getX() == 0) {
                             chessboard.Pro(chessComponent.getChessboardPoint().getX(), chessComponent.getChessboardPoint().getY(), first.getChessColor());
@@ -84,7 +85,7 @@ public class ClickController {
                 if (first == null) {
                     if (handleFirst(chessComponent)) {
                         //music
-                        Music clickMusic = new Music("./Music/clickMusic.wav");
+                        Music clickMusic = new Music("./Music/叮咚.wav");
                         clickMusic.playMusic() ;
                         for (int i = 0; i < chessComponent.canMovePoints().size(); i++) {
                             int x = chessComponent.canMovePoints().get(i).getX();
@@ -116,7 +117,7 @@ public class ClickController {
                             first.getChessComponents()[x][y].repaint();
                         }
                         //music
-                        Music clickMusic = new Music("./Music/clickMusic.wav");
+                        Music clickMusic = new Music("./Music/叮咚.wav");
                         clickMusic.playMusic() ;
                         //huanyuan
                         chessboard.swapChessComponents(first, chessComponent);
@@ -161,7 +162,7 @@ public class ClickController {
                 if (first == null) {
                     if (handleFirst(chessComponent)) {
                         //music
-                        Music clickMusic = new Music("./Music/clickMusic.wav");
+                        Music clickMusic = new Music("./Music/叮咚.wav");
                         clickMusic.playMusic() ;
                         for (int i = 0; i < chessComponent.canMovePoints().size(); i++) {
                             int x = chessComponent.canMovePoints().get(i).getX();
@@ -193,7 +194,7 @@ public class ClickController {
                             first.getChessComponents()[x][y].repaint();
                         }
                         //music
-                        Music clickMusic = new Music("./Music/clickMusic.wav");
+                        Music clickMusic = new Music("./Music/叮咚.wav");
                         clickMusic.playMusic() ;
                         //huanyuan
                         chessboard.swapChessComponents(first, chessComponent);

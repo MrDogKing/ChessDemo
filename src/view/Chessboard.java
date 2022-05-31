@@ -173,6 +173,7 @@ public class Chessboard extends JComponent {
         ChessGameFrame.getStatusLabel().setText(currentColor.getName() );
         ChessGameFrame.getRegret().push(getChessBoard()) ;
         ChessGameFrame.getTimeLabel().setText("15") ;
+        //winner
         if(getWinner().equals("b") ){
             JOptionPane.showMessageDialog(null,String.format("%40s","Winner is Black!") ,"END",JOptionPane.PLAIN_MESSAGE );
             winner = "n";
@@ -186,6 +187,27 @@ public class Chessboard extends JComponent {
             initBoard();
             ChessGameFrame.getRegret() .init() ;
             ChessGameFrame.getTimeLabel().setText("15") ;
+        }
+        //peace
+        for (int i = 0; i < ChessGameFrame.getRegret().getElements().size() ; i++) {
+            List<String> list = ChessGameFrame.getRegret().getElements().get(i) ;
+            int repeat = 0;
+            for (int j = 0; j < ChessGameFrame.getRegret().getElements().size(); j++) {
+                List<String> list1 = ChessGameFrame.getRegret().getElements().get(j) ;
+                if(list.get(0).equals(list1.get(0)) && list.get(1).equals(list1.get(1)) && list.get(2).equals(list1.get(2)) &&
+                        list.get(3).equals(list1.get(3)) && list.get(4).equals(list1.get(4)) && list.get(5).equals(list1.get(5)) &&
+                        list.get(6).equals(list1.get(6)) && list.get(7).equals(list1.get(7)) ){
+                    repeat ++;
+                    if(repeat == 3){break;}
+                }
+            }
+            if(repeat == 3){
+                JOptionPane.showMessageDialog(null,String.format("%40s","Peace!"),"END",JOptionPane.PLAIN_MESSAGE ) ;
+                initBoard();
+                ChessGameFrame.getRegret() .init() ;
+                ChessGameFrame.getTimeLabel().setText("15") ;
+                break;
+            }
         }
     }
 
