@@ -187,6 +187,7 @@ public class ChessGameFrame extends JFrame {
             chessGame.setVisible(true) ;
             timer.stop() ;
             dispose() ;
+            regret.init() ;
         }  );
         button.setLocation(HEIGTH , HEIGTH / 10 + 560);
         button.setSize(200, 60);
